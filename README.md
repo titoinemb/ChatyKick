@@ -1,6 +1,12 @@
 # ChatyKick
 Simple desktop app for kick chat and cool features
 
+# how to get Bearer token ?
+copy past this code in your console javascript in kick.com
+```js
+console.log(decodeURIComponent(document.cookie.split('; ').find(r=>r.startsWith('session_token=')).split('=')[1]))
+```
+
 # Images
 <p align="left">
   <img src="./.github/MD/imgs/screen1.png" width="200px" />
