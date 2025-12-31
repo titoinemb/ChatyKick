@@ -4,23 +4,26 @@ import { Notif } from '@components';
 
 let notificationTimeouts: NodeJS.Timeout[] = [];
 let currentNotificationRoots: Root[] = [];
-
+/**
+ * function for show notification ui popup just 5sec
+ * @param message error message
+ */
 export const showNotif = (message: string): void => {
-  // Crée un div pour chaque notification
-  const div = document.createElement('div');
+  // create div notification
+  let div = document.createElement('div');
   document.body.appendChild(div);
 
-  // Crée un root et rend la notification
-  const root = createRoot(div);
+  // create a root and add Notification UI
+  let root = createRoot(div);
   root.render(React.createElement(Notif, { message }));
   currentNotificationRoots.push(root);
 
-  // Supprime les timeouts précédents pour les notifications
-  const timeout = setTimeout(() => {
-    root.unmount(); // Démonter la notification
-    document.body.removeChild(div); // Retirer le div du body
+  // delete notification after 5sec
+  let timeout = setTimeout(() => {
+    root.unmount();
+    document.body.removeChild(div);
     currentNotificationRoots = currentNotificationRoots.filter(r => r !== root);
-  }, 5000); // Cacher après 5 secondes
+  }, 5000);
 
   notificationTimeouts.push(timeout);
 };
