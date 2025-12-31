@@ -28,7 +28,7 @@ export const useSettings = () => {
    * @param channelId 
    * @returns change state informations
    */
-  const updateSettings = async (channelId: number): Promise<void> => setState({ ...state, channelIdentity: await getChatIdentity(channelId, localStorage.getItem("channelId")!) });
+  const updateSettings = async (channelId: string): Promise<void> => setState({ ...state, channelIdentity: await getChatIdentity(channelId, localStorage.getItem("channelId")!) });
 
   return {
     logOut,
