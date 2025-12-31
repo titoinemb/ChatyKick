@@ -6,7 +6,7 @@ import { useUser } from "@hooks";
 
 export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handleMouseLeave, replyMode, channelName }) => {
   let html = replaceEmotesAndLinks(item.content);
-
+  let metadata: any = item.metadata;
   const {
     getUserInfo,
     removeUserPopup,
@@ -16,6 +16,10 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
     profilePic,
     username
   } = useUser();
+
+  if (typeof item.metadata === "string") {
+    metadata = JSON.parse(item.metadata);
+  };
 
   return (
     <>
@@ -34,6 +38,12 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
           }
         }}
       >
+        {metadata && (
+          <div className="replyMetadata">
+            Replying to {metadata.original_sender.username}:
+            <span className="content" dangerouslySetInnerHTML={{ __html: replaceEmotesAndLinks(metadata.original_message.content) }} />
+          </div>
+        )}
         <div className="identity">
           <div className="badges">
             {item.sender.identity.badges.map((badge, i) => {

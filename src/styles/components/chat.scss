@@ -110,7 +110,7 @@ body,
             display: flex;
             align-items: center;
             justify-content: space-between;
-            
+
             .left {
               img {
                 width: 35px;
@@ -118,6 +118,7 @@ body,
                 border-radius: 50%;
               }
             }
+
             .right {
               cursor: pointer;
             }
@@ -143,6 +144,21 @@ body,
           border-radius: 5px;
           transform: 0.5s;
           margin: 0 5px;
+
+          .replyMetadata {
+            display: flex;
+            font-size: 14px;
+            color: rgb(118, 118, 118);
+            span {
+              font-size: 14px;
+              color: rgb(118, 118, 118);
+              display: inline-block;
+              max-width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
 
           .identity {
             display: flex;
