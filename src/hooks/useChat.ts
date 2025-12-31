@@ -127,17 +127,16 @@ export const useChat = () => {
       emotesList: emotes as any[],
     }));
 
-    let WS_URL = `wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false`;
-
-    let socket = new WebSocket(WS_URL);
+    let socket = new WebSocket(`wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false`);
     socketRef.current = socket;
 
     socket.addEventListener("open", () => {
-      let subscribe = (channel: string) =>
+      let subscribe = (channel: string) => {
         socket.send(JSON.stringify({
           event: "pusher:subscribe",
           data: { auth: "", channel },
         }));
+      };
 
       subscribe(`chatroom_${chatroomId}`);
       subscribe(`chatrooms.${chatroomId}.v2`);
@@ -149,7 +148,7 @@ export const useChat = () => {
       pingIntervalRef.current = window.setInterval(() => {
         if (socket.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify({ event: "pusher:ping", data: {} }));
-        }
+        };
       }, 60000);
 
       connectingRef.current = false;
@@ -169,7 +168,7 @@ export const useChat = () => {
     socket.addEventListener("close", () => {
       if (socketRef.current === socket) {
         socketRef.current = null;
-      }
+      };
       connectingRef.current = false;
     });
 

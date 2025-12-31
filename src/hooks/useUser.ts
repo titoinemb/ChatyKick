@@ -12,10 +12,10 @@ export const useUser = () => {
     visible: false
   });
   /**
-   * 
+   * function for get and set states with user info
    * @param channel_name 
    * @param username 
-   * @returns 
+   * @returns show ui interfaces with user informations
    */
   const getUserInfo = async (channel_name: string, username: string): Promise<void> => {
     if(state.username) return;
@@ -41,8 +41,8 @@ export const useUser = () => {
     });
   };
   /**
-   * 
-   * @returns
+   * function for close user info ui
+   * @returns change data value in states
    */
   const removeUserPopup = (): void => {
     return setState({
