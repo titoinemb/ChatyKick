@@ -13,8 +13,11 @@
     "windows": [
       {
         "title": "chatykick",
-        "width": 800,
-        "height": 600
+        "width": 420,
+        "height": 820,
+        "resizable": true,
+        "maxWidth": 500,
+        "minWidth": 400
       }
     ],
     "security": {
