@@ -20,6 +20,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
   if (typeof item.metadata === "string") {
     metadata = JSON.parse(item.metadata);
   };
+  
 
   return (
     <>
@@ -38,7 +39,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
           }
         }}
       >
-        {metadata && (
+        {metadata && !metadata.message_ref && (
           <div className="replyMetadata">
             Replying to {metadata.original_sender.username}:
             <span className="content" dangerouslySetInnerHTML={{ __html: replaceEmotesAndLinks(metadata.original_message.content) }} />
