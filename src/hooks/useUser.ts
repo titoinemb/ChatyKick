@@ -1,12 +1,63 @@
 import { useState } from "react";
-import { UserStates } from "@types";
+import { UserStates, formatDate} from "@types";
+import { getChatIdentity } from "@services";
+import { showNotif } from "@utils";
 
 export const useUser = () => {
   const [state, setState] = useState<UserStates>({
-    
+    badges: null,
+    followingSince: null,
+    profilePic: null,
+    username: null,
+    visible: false
   });
+  /**
+   * 
+   * @param channel_name 
+   * @param username 
+   * @returns 
+   */
+  const getUserInfo = async (channel_name: string, username: string): Promise<void> => {
+    if(state.username) return;
+
+    let identity = await getChatIdentity(channel_name, username);
+
+    if(!identity) return showNotif("error for get user identity");
+
+    var profilePicture = "https://kick.com/img/default-profile-pictures/default-avatar-2.webp";
+
+    if(identity.profile_pic) profilePicture = identity.profile_pic;
+
+    let date = new Date(identity.following_since);
+    let formattedDate = date.toLocaleDateString('fr-FR', formatDate);
+
+    return setState({
+      ...state,
+      badges: identity.badges,
+      followingSince: formattedDate,
+      profilePic: profilePicture,
+      username: username,
+      visible: true
+    });
+  };
+  /**
+   * 
+   * @returns
+   */
+  const removeUserPopup = (): void => {
+    return setState({
+      ...state,
+      visible: false,
+      badges: null,
+      followingSince: null,
+      profilePic: null,
+      username: null
+    });
+  };
 
   return {
-
+    ...state,
+    getUserInfo,
+    removeUserPopup
   };
 };

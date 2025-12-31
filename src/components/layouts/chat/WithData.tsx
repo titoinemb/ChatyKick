@@ -48,7 +48,7 @@ export const ChatWithData: React.FC = () => {
       <div className="content">
         <div className="chat" ref={containerRef} onScroll={handleScroll}>
           {channelMessages.slice().reverse().map((item) => (
-            <Message key={item.id} item={item} {...{ handleMouseEnter, handleMouseLeave, replyMode }} />
+            <Message key={item.id} item={item} {...{ handleMouseEnter, handleMouseLeave, replyMode }} channelName={channelName!} />
           ))}
           <div ref={bottomRef} />
           <div style={{ padding: "35px" }}></div>
@@ -74,6 +74,7 @@ export const ChatWithData: React.FC = () => {
             <ReplyBox
               replyMessageData={replyMessageData}
               removeReply={removeReply}
+              channelName={channelName!}
             />
           )}
           <div className="box">

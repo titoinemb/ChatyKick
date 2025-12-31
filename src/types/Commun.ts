@@ -51,3 +51,9 @@ export const SubGiftBadgesColor: SubGiftBadgesColorType = {
   subgifter100: { dark: "#FF5008", light: "#FFC800" },
   subGifter200: { dark: "#2FA604", light: "#53F918" },
 };
+// date format 
+export const formatDate: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+};

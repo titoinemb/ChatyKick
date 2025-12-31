@@ -23,7 +23,10 @@ export type SettingsState = {
   channelIdentity: any | null;
 };
 export type UserStates = {
-  badges: Badge[];
-  username: string;
-  image: string;
+  badges: Badge[] | null;
+  username: string | null;
+  profilePic: string | null;
+  followingSince: string | null;
+  // ui for show user informations
+  visible: boolean;
 };

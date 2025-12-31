@@ -98,6 +98,44 @@ body,
           }
         }
 
+        .user {
+          position: fixed;
+          background-color: var.$blackLight;
+          padding: 25px;
+          border-radius: 5px;
+          width: 250px;
+          bottom: 60px;
+
+          .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+            .left {
+              img {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+              }
+            }
+            .right {
+              cursor: pointer;
+            }
+          }
+
+          .bottom {
+            .badges {
+              .badgeslist {
+                display: flex;
+
+                .badge {
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
+        }
+
         .msg {
           display: flex;
           align-items: center;

@@ -2,7 +2,7 @@ import React from 'react';
 import { ReplayBoxProps } from "@types";
 import { Reply, Message, Add } from "@components";
 
-export const ReplyBox: React.FC<ReplayBoxProps> = ({ replyMessageData, removeReply }) => (
+export const ReplyBox: React.FC<ReplayBoxProps> = ({ replyMessageData, removeReply, channelName }) => (
   <div className="replyBox">
     {replyMessageData && (
       <>
@@ -15,7 +15,7 @@ export const ReplyBox: React.FC<ReplayBoxProps> = ({ replyMessageData, removeRep
             <Add transform="rotate(90deg)" width="20px" height="20px" />
           </div>
         </div>
-        <Message item={replyMessageData} />
+        <Message item={replyMessageData} channelName={channelName} />
       </>
     )}
   </div>

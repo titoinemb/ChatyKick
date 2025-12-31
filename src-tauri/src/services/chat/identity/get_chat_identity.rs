@@ -1,11 +1,11 @@
 
-use serde_json::{Number, Value};
+use serde_json::{Value};
 use tauri::command;
 use surf;
 
 #[command]
-pub async fn get_chat_identity(channel_name: Number, user_name: String) -> Result<Value, String> {
-    let url: String = format!("https://kick.com/api/v2/channels/{}/users/{}", channel_name, user_name);
+pub async fn get_chat_identity(channel_name: String, username: String) -> Result<Value, String> {
+    let url: String = format!("https://kick.com/api/v2/channels/{}/users/{}", channel_name, username);
 
     let client: surf::Client = surf::Client::new();
 

@@ -1,4 +1,4 @@
-import { Message, ChatSettings } from "@types";
+import { Message, ChatSettings, Badge } from "@types";
 
 export type SubGiftProps = {
   dark: string;
@@ -9,12 +9,17 @@ export type NotifProps = {
 };
 export type MessageProps = {
   item: Message;
+  channelName: string;
   handleMouseEnter?: (id: string) => void;
   handleMouseLeave?: (id: string) => void;
   replyMode?: (item: Message) => void;
 };
 export type UserProps = {
-  userId: number;
+  badges: Badge[];
+  followingSince: string;
+  profilePic: string;
+  username: string;
+  removeUserPopup: () => void;
 };
 export type OptionsChatProps = {
   channelId: number;
@@ -34,6 +39,7 @@ export type NavigatorProps = {
 };
 export type ReplayBoxProps = {
   replyMessageData: Message | null;
+  channelName: string;
   removeReply: () => void;
 };
 export type EmotesListProps = {
