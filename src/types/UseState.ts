@@ -1,4 +1,4 @@
-import { ChatSettings, Message, SettingsTabs } from "@types";
+import { Badge, ChatSettings, Message, SettingsTabs } from "@types";
 
 export type ChatState = {
   chatList: ChatSettings[];
@@ -21,4 +21,9 @@ export type SettingsState = {
   tab: SettingsTabs;
   settings: any;
   channelIdentity: any | null;
+};
+export type UserStates = {
+  badges: Badge[];
+  username: string;
+  image: string;
 };
