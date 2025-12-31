@@ -2,6 +2,8 @@ import React from "react";
 import { useChat, useMessage } from "@hooks";
 import { Emoji, Settings, Message, EmotesList, Navigator, ReplyBox, SettingsBox } from "@components";
 
+import "@styles/layouts/chat/withData.scss";
+
 export const ChatWithData: React.FC = () => {
   let {
     settingsBox,

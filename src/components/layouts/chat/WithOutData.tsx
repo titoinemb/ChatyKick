@@ -2,6 +2,8 @@ import React from "react";
 import { Add } from "@components";
 import { useChat } from "@hooks";
 
+import "@styles/layouts/chat/withOutData.scss";
+
 export const ChatWithOutData: React.FC = () => {
   let { popup } = useChat();
 

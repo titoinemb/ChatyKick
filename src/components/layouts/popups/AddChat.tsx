@@ -1,5 +1,6 @@
 import React from "react";
 import { useChat } from "@hooks";
+import "@styles/layouts/popup.scss";
 
 export const AddChat: React.FC = () => {
   let { addChat } = useChat();

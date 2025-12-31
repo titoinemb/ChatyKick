@@ -1,0 +1,337 @@
+@use "../../var.scss";
+
+.app {
+  .data {
+    .content {
+
+      .chat {
+        margin: 0 5px 5px 5px;
+        padding: 50px 0 0 0;
+
+        .reply {
+          position: absolute;
+          right: 0;
+          margin: 0 5px 15px 0;
+          display: none;
+
+          svg {
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: rgba(35, 38, 41);
+
+            &:hover {
+              background-color: rgb(60, 64, 70);
+            }
+          }
+        }
+
+        .user {
+          position: fixed;
+          background-color: var.$blackLight;
+          padding: 25px;
+          border-radius: 5px;
+          width: 250px;
+          bottom: 60px;
+
+          .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .left {
+              img {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+              }
+            }
+
+            .right {
+              cursor: pointer;
+            }
+          }
+
+          .bottom {
+            .badges {
+              .badgeslist {
+                display: flex;
+
+                .badge {
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
+        }
+
+        .msg {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          border-radius: 5px;
+          transform: 0.5s;
+          margin: 0 5px;
+
+          .replyMetadata {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: rgb(118, 118, 118);
+
+            span {
+              font-size: 14px;
+              color: rgb(118, 118, 118);
+              display: inline-block;
+              max-width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+
+              img {
+                width: 15px !important;
+                height: 15px !important;
+              }
+            }
+          }
+
+          .identity {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 1px;
+            border-radius: 5px;
+            transform: 0.5s;
+            margin: 0.5px;
+
+            .badges {
+              display: flex;
+              align-items: center;
+
+              .badge {
+                margin: 1.5px 5px 0 0;
+              }
+            }
+
+            .username {
+              font-weight: 700;
+            }
+
+            &:hover {
+              background-color: black;
+            }
+          }
+
+          .content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            overflow-wrap: anywhere;
+            margin: 0 2px;
+
+            .emoji {
+              width: 28px;
+              margin: 0 1px;
+            }
+          }
+
+          &:hover {
+            background-color: var.$blackLight;
+          }
+        }
+      }
+
+      .message {
+        position: fixed;
+        z-index: 10;
+        width: 100%;
+        bottom: 0;
+        background-color: var.$black;
+
+        .replyBox {
+          margin: 10px;
+          padding: 10px;
+          border-radius: 5px;
+          border-color: gray;
+          border: 1px solid;
+
+          .title {
+            display: flex;
+            justify-content: space-between;
+          }
+
+          .msg {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 5px;
+            transform: 0.5s;
+            margin: 0 5px;
+
+            .identity {
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              padding: 1px;
+              border-radius: 5px;
+              transform: 0.5s;
+              margin: 0.5px;
+
+              .badges {
+                display: flex;
+                align-items: center;
+
+                .badge {
+                  margin: 1.5px 5px 0 0;
+                }
+              }
+
+              .username {
+                font-weight: 700;
+              }
+
+              &:hover {
+                background-color: black;
+              }
+
+            }
+          }
+
+          .content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            overflow-wrap: anywhere;
+            margin: 0 2px;
+
+            .emoji {
+              width: 28px;
+              margin: 0 1px;
+            }
+          }
+
+          &:hover {
+            background-color: var.$blackLight;
+          }
+        }
+
+        .settings,
+        .emotes {
+          padding: 15px;
+          background-color: var.$blackLight;
+          margin: 0 5px;
+          border-radius: 5px 5px 0 0;
+          height: 250px;
+          overflow-y: scroll;
+        }
+
+        .settings {
+          .list {
+            .setting-content {
+              .setting-content-box {
+                .item {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+
+                  input[type="checkbox"] {
+                    width: 15px;
+                    height: 15px;
+                  }
+                }
+              }
+            }
+          }
+
+          .title {
+            font-size: 20px;
+          }
+
+          .menu {
+            display: flex;
+            width: 100%;
+
+            .item {
+              cursor: pointer;
+              background-color: var.$blackLight;
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              padding: 10px;
+              margin: 5px;
+              background-color: var.$black;
+              transition: 0.5s;
+            }
+          }
+
+          .logout {
+            background-color: red;
+            color: var.$white;
+
+            &:hover {
+              background-color: rgb(160, 0, 0);
+            }
+          }
+        }
+
+        .emotes {
+
+          .list {
+            img {
+              width: 35px;
+              cursor: pointer;
+              margin: 2px;
+            }
+          }
+
+          .description {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+
+            img {
+              width: 32px;
+              border-radius: 50%;
+              margin: 0 10px 0 0;
+            }
+          }
+        }
+
+        .box {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px 5px;
+
+          input[type="text"] {
+            height: 36px;
+            width: 100%;
+            border-radius: 0;
+            background-color: var.$blackLight;
+            border: none;
+            color: var.$white;
+            border-radius: 5px;
+
+            &:focus-visible {
+              outline: none;
+              box-shadow: none;
+            }
+          }
+
+          .button {
+            cursor: pointer;
+            background-color: var.$blackLight;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 46px;
+            width: 45px;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}

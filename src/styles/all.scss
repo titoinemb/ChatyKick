@@ -7,7 +7,7 @@
   color: var.$white;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+// remove selection for all compenants
 *,
 *::before,
 *::after {
@@ -16,20 +16,17 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
-
 body {
   background-color: var.$black;
 }
-
 input {
   color: var.$black;
   padding: 5px;
   font-size: 18px;
 }
-
 button {
   color: var.$black;
-  background-color: #53FC18;
+  background-color: var.$kickColor;
   border-radius: 15px;
   border: none;
   padding: 10px 15px 10px 15px;
@@ -39,24 +36,20 @@ button {
   font-size: 20px;
 
   &:hover {
-    background-color: #4fda1d;
+    background-color: var.$kickLightColor;
   }
 }
-
 span {
   color: var.$white;
   margin: 0 5px 0 0;
 }
-
 img {
   -webkit-user-drag: none;
-  user-drag: none;
   user-select: none;
   cursor: default;
 }
-
 a.link {
-  color: rgb(77, 77, 255) !important;
+  color: var.$urlColor !important;
   
   &:hover {
     text-decoration: underline;

@@ -1,0 +1,40 @@
+@use "../../../var.scss";
+
+.app {
+  .data {
+    .navigator {
+      display: flex;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: var.$black;
+
+      .channel {
+        cursor: pointer;
+        background-color: var.$blackLight;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+        margin: 5px;
+        font-size: 3dvw;
+
+        .options {
+          display: flex;
+          align-items: center;
+          padding: 2.5px;
+          margin: 2px;
+          border-radius: 50%;
+
+          &:hover {
+            svg {
+              fill: var.$red;
+            }
+          }
+        }
+      }
+    }
+  }
+}

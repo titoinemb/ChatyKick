@@ -1,0 +1,30 @@
+@use "../var.scss";
+
+#popupBox {
+  position: fixed;
+  z-index: 2000;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.459);
+
+  .popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    flex-direction: column;
+    z-index: 2;
+    background-color: var.$blackLight;
+    padding: 25px;
+    border-radius: 10px;
+    cursor: default;
+
+    button {
+      margin: 10px 0 0 0;
+    }
+  }
+}

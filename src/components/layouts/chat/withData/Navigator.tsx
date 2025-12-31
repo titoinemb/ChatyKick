@@ -1,5 +1,6 @@
 import { Trash } from "@components";
 import { NavigatorProps } from "@types";
+import "@styles/layouts/chat/withData/navigator.scss";
 
 export const Navigator: React.FC<NavigatorProps> = ({ chatList, channelName, popup, trashChat, channelSelected, setChat }) => (
   <div className="navigator">
