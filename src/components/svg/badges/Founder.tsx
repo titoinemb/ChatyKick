@@ -1,0 +1,26 @@
+import React from "react";
+
+export const Founder: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16" xmlSpace="preserve">
+    <defs>
+      <linearGradient
+        id="g"
+        x1="7.874"
+        y1="20.2333"
+        x2="8.1274"
+        y2="-0.3467"
+        gradientTransform="matrix(1 0 0 -1 0 18)"
+      >
+        <stop offset="0" stopColor="rgb(255,201,0)" />
+        <stop offset="0.99" stopColor="rgb(255,149,0)" />
+      </linearGradient>
+    </defs>
+
+    <path
+      d="M14.6 4V2.7h-1.3V1.4H12V0H4v1.4H2.7v1.3H1.3V4H0v8h1.3v1.3h1.4v1.3H4V16h8v-1.4h1.3v-1.3h1.3V12H16V4H14.6zM9.9 12.9H6.7V6.4H4.5V5.2h1V4.1h1v-1h3.4V12.9z"
+      fill="url(#g)"
+      fillRule="evenodd"
+      clipRule="evenodd"
+    />
+  </svg>
+);

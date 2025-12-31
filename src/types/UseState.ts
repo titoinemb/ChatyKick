@@ -1,0 +1,24 @@
+import { ChatSettings, Message, SettingsTabs } from "@types";
+
+export type ChatState = {
+  chatList: ChatSettings[];
+  channelSelected: string | null;
+  channelChatroomSelected: string | null;
+  channelMessages: Message[];
+  isAtBottom: boolean;
+  emotesList: any[] | null;
+  message: string;
+  channelName: string | null;
+  emotesListBox: boolean;
+  settingsBox: boolean;
+  channelMaxMessage: number;
+};
+export type MessageState = {
+  replyMessageData: Message | null;
+  isReplyOpen: boolean;
+};
+export type SettingsState = {
+  tab: SettingsTabs;
+  settings: any;
+  channelIdentity: any | null;
+};
