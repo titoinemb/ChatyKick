@@ -1,5 +1,5 @@
 # ChatyKick
-Simple desktop app for kick chat and good features
+Simple desktop app for kick chat and cool features
 
 # Images
 <p align="left">
