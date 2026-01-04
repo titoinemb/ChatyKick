@@ -28,8 +28,13 @@ export const useUser = () => {
 
     if(identity.profile_pic) profilePicture = identity.profile_pic;
 
-    let date = new Date(identity.following_since);
-    let formattedDate = date.toLocaleDateString('fr-FR', formatDate);
+
+    if(identity.following_since) {
+      let date = new Date(identity.following_since);
+      var formattedDate = date.toLocaleDateString('fr-FR', formatDate);
+    } else {
+      var formattedDate = "never";
+    };
 
     return setState({
       ...state,
