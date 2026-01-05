@@ -328,7 +328,7 @@ export const useChat = () => {
   /**
    * function for remove popup with rules and add channel name in blacklist
    * @param channelName channel name to blacklist
-   * @returns remove popup box with rules and blacklist the channel for never re show the blacklist
+   * @returns remove popup box with rules and blacklist the channel for never re show the rules
    */
   const blackListChannelRules = (channelName: string) => {
     let rulesBlackList: string[] = JSON.parse(localStorage.getItem("rulesBlackList")!);
