@@ -116,7 +116,7 @@ export const useChat = () => {
     };
 
     let messagesHistory = await chatHistory(channelId);
-    let emotes = await getEmotes(channelName);
+    let emotes = await getEmotes(channelName, localStorage.getItem("BearerToken")!);
 
     setState(s => ({
       ...s,
@@ -283,6 +283,14 @@ export const useChat = () => {
 
     return setState({ ...state, channelMaxMessage: value});
   };
+  /**
+   * function for show rules
+   * @param channelName the channel name
+   * @returns show popup box with rules
+   */
+  const showRules = (channelName: string): void => {
+
+  };
   // exec in launch
   let exec = 0;
 
@@ -297,7 +305,7 @@ export const useChat = () => {
   }, [])
   // auto scroll
   useEffect((): any => state.isAtBottom && bottomRef.current?.scrollIntoView({ behavior: "instant" }), [state.channelMessages, state.isAtBottom]);
-  
+  // export all function/variables
   return {
     ...state,
     setState,
@@ -313,6 +321,7 @@ export const useChat = () => {
     trashChat,
     handleChangeInput,
     inputRef,
-    handleChangeMaxMessage
+    handleChangeMaxMessage,
+    showRules
   };
 };
