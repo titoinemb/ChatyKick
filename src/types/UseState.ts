@@ -12,6 +12,7 @@ export type ChatState = {
   emotesListBox: boolean;
   settingsBox: boolean;
   channelMaxMessage: number;
+  lastMessageSent: number;
 };
 export type MessageState = {
   replyMessageData: Message | null;

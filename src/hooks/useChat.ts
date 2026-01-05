@@ -11,6 +11,7 @@ export const useChat = () => {
   let socketRef = useRef<WebSocket | null>(null);
   let connectingRef = useRef<boolean>(false);
   let pingIntervalRef = useRef<number | null>(null);
+
   const [state, setState] = useState<ChatState>({
     chatList: initChatList,
     channelSelected: null,
@@ -22,7 +23,8 @@ export const useChat = () => {
     message: "",
     channelName: null,
     emotesListBox: false,
-    settingsBox: false
+    settingsBox: false,
+    lastMessageSent: 0, // Variable to store the last message sent timestamp
   });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -186,6 +188,12 @@ export const useChat = () => {
    */
   const inputMessageEnter = async (event: React.KeyboardEvent<HTMLInputElement>, reply: Message | null, removeReply: () => void): Promise<void> => {
     if (event.key !== "Enter") return;
+
+    // Check the timestamp to ensure messages can only be sent after 100ms
+    const currentTime = Date.now();
+    if (currentTime - state.lastMessageSent < 100) return; // Prevent sending messages too quickly
+    setState({ ...state, lastMessageSent: currentTime }); // Update the timestamp of the last sent message
+
     // close reply box
     removeReply()
 
