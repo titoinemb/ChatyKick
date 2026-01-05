@@ -29,8 +29,12 @@ export const useSettings = () => {
    * @returns change state informations
    */
   const updateSettings = async (channelId: string): Promise<void> => setState({ ...state, channelIdentity: await getChatIdentity(channelId, localStorage.getItem("channelId")!) });
-
-  const rulesUpdate = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+  /**
+   * function for update rules options in settings and localStorage
+   * @param event 
+   * @returns change rules options in settings and localStorage
+   */
+  const rulesUpdate = (event: React.ChangeEvent<HTMLInputElement>): void => {
     let cheker: boolean = event.target.checked;
 
     if (cheker) {
