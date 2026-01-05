@@ -25,6 +25,11 @@ export const useLogin = () => {
     localStorage.setItem("BearerToken", token);
     localStorage.setItem("channelId", id.data.balance.user_id);
     localStorage.setItem("channelMaxMessage", "50");
+    localStorage.setItem("rulesBlackList", "[]");
+    localStorage.setItem("settings", JSON.stringify({
+      rules: true,
+      raimbowColor: false,
+    }));
 
     return toChat();
   };

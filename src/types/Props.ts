@@ -54,3 +54,8 @@ export type SettingsProps = {
   channelMaxMessage: number;
   handleChangeMaxMessage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
+export type RuleProps = {
+  rules: string;
+  channelName: string;
+  blackListChannelRules: (channelName: string) => void;
+};

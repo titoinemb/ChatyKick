@@ -1,6 +1,6 @@
 import React from "react";
 import { useChat, useMessage } from "@hooks";
-import { Emoji, Settings, Message, EmotesList, Navigator, ReplyBox, SettingsBox } from "@components";
+import { Emoji, Settings, Message, EmotesList, Navigator, ReplyBox, SettingsBox, Rules } from "@components";
 
 import "@styles/layouts/chat/withData.scss";
 
@@ -18,6 +18,7 @@ export const ChatWithData: React.FC = () => {
     message,
     inputRef,
     channelName,
+    rulesInfos,
     popup,
     setChat,
     handleChangeMaxMessage,
@@ -26,7 +27,8 @@ export const ChatWithData: React.FC = () => {
     handleChangeInput,
     showSettingsList,
     showEmotesList,
-    trashChat 
+    trashChat,
+    blackListChannelRules,
   } = useChat();
   let {
     replyMessageData,
@@ -34,7 +36,7 @@ export const ChatWithData: React.FC = () => {
     handleMouseEnter,
     handleMouseLeave,
     replyMode,
-    removeReply
+    removeReply,
   } = useMessage();
 
   return (
@@ -72,11 +74,18 @@ export const ChatWithData: React.FC = () => {
               handleChangeMaxMessage={handleChangeMaxMessage}
             />
           )}
-          {isReplyOpen && (
+          {isReplyOpen && channelName && (
             <ReplyBox
               replyMessageData={replyMessageData}
               removeReply={removeReply}
-              channelName={channelName!}
+              channelName={channelName}
+            />
+          )}
+          {rulesInfos && channelName && (
+            <Rules
+              rules={rulesInfos}
+              channelName={channelName}
+              blackListChannelRules={blackListChannelRules}
             />
           )}
           <div className="box">

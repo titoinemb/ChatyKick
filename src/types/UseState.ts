@@ -13,6 +13,7 @@ export type ChatState = {
   settingsBox: boolean;
   channelMaxMessage: number;
   lastMessageSent: number;
+  rulesInfos: string;
 };
 export type MessageState = {
   replyMessageData: Message | null;

@@ -1,6 +1,6 @@
 import { useState, createElement, useEffect, useRef, useCallback } from "react";
 import { createRoot } from 'react-dom/client';
-import { getChannelinformations, chatHistory, sendMessage, getEmotes } from "@services";
+import { getChannelinformations, chatHistory, sendMessage, getEmotes, rules } from "@services";
 import { ChatSettings, ChatState, Message } from "@types";
 import { showNotif } from "@utils";
 import { AddChat } from "@components";
@@ -25,6 +25,7 @@ export const useChat = () => {
     emotesListBox: false,
     settingsBox: false,
     lastMessageSent: 0, // Variable to store the last message sent timestamp
+    rulesInfos: "",
   });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -110,11 +111,13 @@ export const useChat = () => {
     if (socketRef.current) {
       socketRef.current.close();
       socketRef.current = null;
+      setState({ ...state, rulesInfos: "" });
     };
 
     if (pingIntervalRef.current) {
       clearInterval(pingIntervalRef.current);
       pingIntervalRef.current = null;
+      setState({ ...state, rulesInfos: "" });
     };
 
     let messagesHistory = await chatHistory(channelId);
@@ -128,6 +131,8 @@ export const useChat = () => {
       channelName,
       emotesList: emotes as any[],
     }));
+
+    showRules(channelName);
 
     let socket = new WebSocket(`wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false`);
     socketRef.current = socket;
@@ -296,8 +301,45 @@ export const useChat = () => {
    * @param channelName the channel name
    * @returns show popup box with rules
    */
-  const showRules = (channelName: string): void => {
+  const showRules = async (channelName: string): Promise<void> => {
+    let rulesOption: boolean = JSON.parse(localStorage.getItem("settings")!).rules;
+    let rulesBlackList: string[] = JSON.parse(localStorage.getItem("rulesBlackList")!);
 
+    // strandartised channel name
+    let normalizedChannelName = channelName.replace(/_/g, '-').toLowerCase();
+    let isBlacklisted = rulesBlackList.some(rule => rule.replace(/_/g, '-').toLowerCase() === normalizedChannelName);
+    // 
+    if(rulesOption === true) {
+      // check if the channel name is not in the black list
+      if(!isBlacklisted) {
+        // get rules informations
+        let rulesInfos = await rules(channelName);
+
+        if(rulesInfos) {
+          // set informations
+          setState(s => ({
+            ...s,
+            rulesInfos,
+          }));
+        };
+      };
+    };
+  };
+  /**
+   * function for remove popup with rules and add channel name in blacklist
+   * @param channelName channel name to blacklist
+   * @returns remove popup box with rules and blacklist the channel for never re show the blacklist
+   */
+  const blackListChannelRules = (channelName: string) => {
+    let rulesBlackList: string[] = JSON.parse(localStorage.getItem("rulesBlackList")!);
+    // add channel name in blacklist
+    rulesBlackList.push(channelName);
+    localStorage.setItem("rulesBlackList", JSON.stringify(rulesBlackList));
+    // remove the popup rules
+    setState({
+      ...state,
+      rulesInfos: "",
+    });
   };
   // exec in launch
   let exec = 0;
@@ -316,20 +358,21 @@ export const useChat = () => {
   // export function/variables
   return {
     ...state,
+    containerRef,
+    bottomRef,
+    inputRef,
     setState,
     addChat,
     popup,
     setChat,
     inputMessageEnter,
     handleScroll,
-    containerRef,
-    bottomRef,
     showEmotesList,
     showSettingsList,
     trashChat,
     handleChangeInput,
-    inputRef,
     handleChangeMaxMessage,
-    showRules
+    showRules,
+    blackListChannelRules,
   };
 };
