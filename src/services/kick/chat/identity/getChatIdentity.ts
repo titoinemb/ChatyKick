@@ -2,6 +2,8 @@ import { invoke } from '@tauri-apps/api/core';
 
 export const getChatIdentity = async (channelName: string, username: string): Promise<false | any> => {
   try {
+    // strandartised usernname
+    var channelName = channelName.replace("_", "-");
     let result: any = await invoke('get_chat_identity', { channelName, username });
 
     if (result) {
