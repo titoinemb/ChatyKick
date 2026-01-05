@@ -1,5 +1,5 @@
 # ChatyKick
-Simple desktop app for kick chat and cool features
+A simple desktop application for Kick chat with cool features
 
 # how to get Bearer token ?
 copy past this code in your console javascript in kick.com
