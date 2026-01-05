@@ -9,7 +9,7 @@ updates:
     ignore:
       - dependency-name: "tauri" # specify the dependency to ignore, if any
         versions: ["<1.0.0"] # specify the versions to ignore
-  - package-ecosystem: "rust" # for Rust dependencies
+  - package-ecosystem: "cargo" # for Rust dependencies
     directory: "/" # location of Cargo.toml
     schedule:
       interval: "weekly" # how often to check for updates
