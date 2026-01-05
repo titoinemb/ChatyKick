@@ -4,13 +4,14 @@ use tauri::command;
 use surf;
 
 #[command]
-pub async fn get_emotes(name: String) -> Result<Value, String> {
+pub async fn get_emotes(name: String, bearer_token: String) -> Result<Value, String> {
     let url: String = format!("https://kick.com/emotes/{}", name);
 
     let client: surf::Client = surf::Client::new();
 
     let mut response: surf::Response = client
         .get(&url)
+        .header("Authorization", format!("Bearer {}", bearer_token))
         .header("Content-Type", "application/json")
         .header(
             "User-Agent",
