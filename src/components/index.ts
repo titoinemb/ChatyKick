@@ -16,7 +16,7 @@ export const ChatWithOutData = lazy(() => import("./layouts/chat/WithOutData").t
 export const ChatWithData = lazy(() => import("./layouts/chat/WithData").then(mod => ({ default: mod.ChatWithData })));
 export const Notif = lazy(() => import("./layouts/popups/Notif").then(mod => ({ default: mod.Notif })));
 export const AddChat = lazy(() => import("./layouts/popups/AddChat").then(mod => ({ default: mod.AddChat })));
-export const Message = lazy(() => import("./layouts/Message").then(mod => ({ default: mod.Message })));
+export const Message = lazy(() => import("./layouts/chat/withData/messages/Message").then(mod => ({ default: mod.Message })));
 export const User = lazy(() => import("./layouts/chat/withData/User").then(mod => ({ default: mod.User })));
 export const Rules = lazy(() => import("./layouts/chat/withData/Rules").then(mod => ({ default: mod.Rules })));
 // badges
