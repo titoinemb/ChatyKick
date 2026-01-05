@@ -3,7 +3,7 @@ import { SettingsProps } from "@types";
 import { useSettings } from "@hooks";
 
 export const Settings: React.FC<SettingsProps> = ({ channelName, channelMaxMessage, handleChangeMaxMessage }) => {
-  let { logOut, tab, changeSettingsMenu, channelIdentity } = useSettings();
+  let { logOut, tab, changeSettingsMenu, channelIdentity, rulesUpdate, settings } = useSettings();
 
   return (
     <div className="settings">
@@ -17,7 +17,7 @@ export const Settings: React.FC<SettingsProps> = ({ channelName, channelMaxMessa
             <div className="setting-content-box">
               <div className="item">
                 <div className="title">Show rules channels</div>
-                <input type="checkbox" name="rules" id="rules" />
+                <input type="checkbox" name="rules" id="rules" onChange={rulesUpdate} checked={settings.rules}/>
               </div>
               <div className="item">
                 <div className="title">Raimbow Color</div>

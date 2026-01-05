@@ -5,7 +5,7 @@ import { getChatIdentity } from "@services";
 export const useSettings = () => {
   const [state, setState] = useState<SettingsState>({
     tab: "global",
-    settings: localStorage.getItem("settings") || [],
+    settings: JSON.parse(localStorage.getItem("settings")!),
     channelIdentity: null
   });
   /**
@@ -29,11 +29,37 @@ export const useSettings = () => {
    * @returns change state informations
    */
   const updateSettings = async (channelId: string): Promise<void> => setState({ ...state, channelIdentity: await getChatIdentity(channelId, localStorage.getItem("channelId")!) });
+
+  const rulesUpdate = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    let cheker: boolean = event.target.checked;
+
+    if (cheker) {
+      // active for show rules
+      var newSettings = {
+        ...state.settings,
+        rules: true,
+      };
+    } else {
+      // disable rules
+      var newSettings = {
+        ...state.settings,
+        rules: false,
+      };
+    };
+    // change data in state
+    setState({
+      ...state,
+      settings: newSettings
+    });
+    // change data in localstorage
+    localStorage.setItem("settings", JSON.stringify(newSettings));
+  };
   // export function/variables
   return {
     logOut,
     ...state,
     changeSettingsMenu,
-    updateSettings
+    updateSettings,
+    rulesUpdate
   };
 };
