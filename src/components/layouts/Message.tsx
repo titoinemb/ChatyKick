@@ -7,7 +7,7 @@ import { useUser } from "@hooks";
 export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handleMouseLeave, replyMode, channelName }) => {
   let html = replaceEmotesAndLinks(item.content);
   let metadata: any = item.metadata;
-  const {
+  let {
     getUserInfo,
     removeUserPopup,
     visible,
@@ -20,7 +20,6 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
   if (typeof item.metadata === "string") {
     metadata = JSON.parse(item.metadata);
   };
-  
 
   return (
     <>
@@ -45,6 +44,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
             <span className="content" dangerouslySetInnerHTML={{ __html: replaceEmotesAndLinks(metadata.original_message.content) }} />
           </div>
         )}
+        
         <div className="identity">
           <div className="badges">
             {item.sender.identity.badges.map((badge, i) => {
@@ -60,7 +60,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
               };
 
               if (isBadgeType(badge.type)) {
-                const badgeColor = SubGiftBadgesColor[badge.type];
+                let badgeColor = SubGiftBadgesColor[badge.type];
 
                 dark = badgeColor.dark;
                 light = badgeColor.light;

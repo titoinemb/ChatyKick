@@ -42,7 +42,7 @@ export const BadgeMap = {
   Moderator,
   OG,
   Sidekick,
-  Subgifter,
+  "Sub Gifter": Subgifter,
   Subscriber,
   Trainwreckstv,
   Verified,

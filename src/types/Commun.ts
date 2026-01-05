@@ -36,7 +36,7 @@ export type Message = {
 // list of settings tab
 export type SettingsTabs = "global" | "channel";
 // list of subgift badge
-export type BadgeTypes = "subgfifter" | "subgifter25" | "subgifter50" | "subgifter100" | "subGifter200";
+export type BadgeTypes = "sub_gifter" | "subgifter25" | "subgifter50" | "subgifter100" | "subGifter200";
 // color for subgift badge
 export type SubGiftBadgesColorType = {
   [K in BadgeTypes]: {
@@ -45,7 +45,7 @@ export type SubGiftBadgesColorType = {
   };
 };
 export const SubGiftBadgesColor: SubGiftBadgesColorType = {
-  subgfifter: { dark: "#0269D4", light: "#04D0FF" },
+  sub_gifter: { dark: "#0269D4", light: "#04D0FF" },
   subgifter25: { dark: "#7B1BAB", light: "#A947D3" },
   subgifter50: { dark: "#CF0038", light: "#FA4E78" },
   subgifter100: { dark: "#FF5008", light: "#FFC800" },
