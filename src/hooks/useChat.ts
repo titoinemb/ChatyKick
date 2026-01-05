@@ -13,15 +13,15 @@ export const useChat = () => {
   let pingIntervalRef = useRef<number | null>(null);
 
   const [state, setState] = useState<ChatState>({
-    chatList: initChatList,
-    channelSelected: null,
-    channelChatroomSelected: null,
-    channelMessages: [],
+    chatList: initChatList, // list of chat
+    channelSelected: null, // chatroom id selected
+    channelChatroomSelected: null, // chatroom id selected
+    channelMessages: [], // list of message in chat
     channelMaxMessage: (Number(localStorage.getItem("channelMaxMessage"))),
     isAtBottom: true,
     emotesList: null,
-    message: "",
-    channelName: null,
+    message: "", // message for send
+    channelName: null, // the channel name selected
     emotesListBox: false,
     settingsBox: false,
     lastMessageSent: 0, // Variable to store the last message sent timestamp
