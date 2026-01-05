@@ -11,6 +11,7 @@ mod services {
         pub mod send_message;
         pub mod get_emotes;
         pub mod auth_socket;
+        pub mod rules;
     }
 }
 
@@ -27,7 +28,8 @@ pub fn run() {
             services::chat::send_message::send_message,
             services::chat::identity::get_chat_identity::get_chat_identity,
             services::chat::get_emotes::get_emotes,
-            services::chat::auth_socket::auth_socket
+            services::chat::auth_socket::auth_socket,
+            services::chat::rules::rules,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
