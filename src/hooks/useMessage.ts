@@ -37,7 +37,7 @@ export const useMessage = () => {
    * @returns change state informations
    */
   const removeReply = (): void => setState(s => ({ ...s, replyMessageData: null, isReplyOpen: false }));
-
+  // export function/variables
   return {
     handleMouseEnter,
     handleMouseLeave,

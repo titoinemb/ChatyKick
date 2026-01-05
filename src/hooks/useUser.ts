@@ -59,7 +59,7 @@ export const useUser = () => {
       username: null
     });
   };
-
+  // export function/variables
   return {
     ...state,
     getUserInfo,

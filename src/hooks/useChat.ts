@@ -305,7 +305,7 @@ export const useChat = () => {
   }, [])
   // auto scroll
   useEffect((): any => state.isAtBottom && bottomRef.current?.scrollIntoView({ behavior: "instant" }), [state.channelMessages, state.isAtBottom]);
-  // export all function/variables
+  // export function/variables
   return {
     ...state,
     setState,
