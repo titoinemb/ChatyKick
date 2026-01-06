@@ -270,7 +270,7 @@ export const useChat = () => {
         updatedChatList.length ? updatedChatList[0].name : null
       );
 
-      if (!updatedChatList.length) window.location.reload();
+      window.location.reload();
 
       return {
         ...prevState,
