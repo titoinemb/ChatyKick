@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { UserStates, formatDate} from "@types";
-import { getChatIdentity } from "@services";
+import { getUserInfos } from "@services";
 import { showNotif } from "@utils";
 
 export const useUser = () => {
   const [state, setState] = useState<UserStates>({
-    badges: null,
     followingSince: null,
     profilePic: null,
     username: null,
@@ -17,10 +16,10 @@ export const useUser = () => {
    * @param username 
    * @returns show ui interfaces with user informations
    */
-  const getUserInfo = async (channel_name: string, username: string): Promise<void> => {
+  const getUserInfo = async (channelName: string, username: string): Promise<void> => {
     if(state.username) return;
 
-    let identity = await getChatIdentity(channel_name, username);
+    let identity = await getUserInfos(channelName, username);
 
     if(!identity) return showNotif("error for get user identity");
 
@@ -38,7 +37,6 @@ export const useUser = () => {
 
     return setState({
       ...state,
-      badges: identity.badges,
       followingSince: formattedDate,
       profilePic: profilePicture,
       username: username,
@@ -53,7 +51,6 @@ export const useUser = () => {
     return setState({
       ...state,
       visible: false,
-      badges: null,
       followingSince: null,
       profilePic: null,
       username: null

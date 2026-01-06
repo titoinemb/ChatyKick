@@ -1,6 +1,6 @@
 import React from "react";
-import { MessageProps, SubGiftBadgesColor, BadgeTypes } from "@types";
-import { BadgeMap, Reply, User } from "@components";
+import { MessageProps } from "@types";
+import { Reply, User, Badges } from "@components";
 import { replaceEmotesAndLinks } from "@utils";
 import { useUser } from "@hooks";
 
@@ -11,7 +11,6 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
     getUserInfo,
     removeUserPopup,
     visible,
-    badges,
     followingSince,
     profilePic,
     username
@@ -22,7 +21,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
   return (
     <>
       {visible && (
-        <User badges={badges!} followingSince={followingSince!} profilePic={profilePic!} username={username!} removeUserPopup={removeUserPopup} />
+        <User item={item} followingSince={followingSince!} profilePic={profilePic!} username={username!} removeUserPopup={removeUserPopup} />
       )}
       {metadata?.celebration
       ? /** show celebration message (sub) */
@@ -52,29 +51,7 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
           )}
 
           <div className="identity">
-            <div className="badges">
-              {item.sender.identity.badges.map((badge, i) => {
-                if (!(badge.text in BadgeMap)) return null;
-
-                let BadgeComponent = BadgeMap[badge.text as keyof typeof BadgeMap];
-
-                var dark = "#fff";
-                var light = "#fff";
-
-                function isBadgeType(type: string): type is BadgeTypes {
-                  return type in SubGiftBadgesColor;
-                };
-
-                if (isBadgeType(badge.type)) {
-                  let badgeColor = SubGiftBadgesColor[badge.type];
-
-                  dark = badgeColor.dark;
-                  light = badgeColor.light;
-                };
-
-                return <div className="badge" key={i}><BadgeComponent dark={dark} light={light} /></div>;
-              })}
-            </div>
+            <div className="badges"><Badges item={item} /></div>
             <div className="username"
               onClick={() => {
                 getUserInfo(channelName, item.sender.username)

@@ -77,6 +77,7 @@ export const ChatWithData: React.FC = () => {
               channelName={channelName}
               channelMaxMessage={channelMaxMessage}
               handleChangeMaxMessage={handleChangeMaxMessage}
+              channelId={channelSelected!}
             />
           )}
           {isReplyOpen && channelName && (

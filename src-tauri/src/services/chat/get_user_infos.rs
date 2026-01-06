@@ -4,8 +4,8 @@ use tauri::command;
 use surf;
 
 #[command]
-pub async fn get_chat_identity(channel_id: String, user_id: String) -> Result<Value, String> {
-    let url: String = format!("https://kick.com/api/v2/channels/{}/users/{}/identity/", channel_id, user_id);
+pub async fn get_user_infos(channel_name: String, username: String) -> Result<Value, String> {
+    let url: String = format!("https://kick.com/api/v2/channels/{}/users/{}", channel_name, username);
 
     let client: surf::Client = surf::Client::new();
 

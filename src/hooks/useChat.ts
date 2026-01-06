@@ -14,7 +14,7 @@ export const useChat = () => {
 
   const [state, setState] = useState<ChatState>({
     chatList: initChatList, // list of chat
-    channelSelected: null, // chatroom id selected
+    channelSelected: null, // channel id selected
     channelChatroomSelected: null, // chatroom id selected
     channelMessages: [], // list of message in chat
     channelMaxMessage: (Number(localStorage.getItem("channelMaxMessage"))),

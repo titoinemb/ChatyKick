@@ -19,6 +19,7 @@ export const AddChat = lazy(() => import("./layouts/popups/AddChat").then(mod =>
 export const Message = lazy(() => import("./layouts/chat/withData/messages/Message").then(mod => ({ default: mod.Message })));
 export const User = lazy(() => import("./layouts/chat/withData/User").then(mod => ({ default: mod.User })));
 export const Rules = lazy(() => import("./layouts/chat/withData/Rules").then(mod => ({ default: mod.Rules })));
+export const Badges = lazy(() => import("./layouts/chat/withData/Badges").then(mod => ({ default: mod.Badges })));
 // badges
 export const Broadcaster = lazy(() =>import("./svg/badges/Broadcaster").then(mod => ({ default: mod.Broadcaster })));
 export const Founder = lazy(() =>import("./svg/badges/Founder").then(mod => ({ default: mod.Founder })));

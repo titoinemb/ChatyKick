@@ -12,6 +12,7 @@ mod services {
         pub mod get_emotes;
         pub mod auth_socket;
         pub mod rules;
+        pub mod get_user_infos;
     }
 }
 
@@ -30,6 +31,7 @@ pub fn run() {
             services::chat::get_emotes::get_emotes,
             services::chat::auth_socket::auth_socket,
             services::chat::rules::rules,
+            services::chat::get_user_infos::get_user_infos,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

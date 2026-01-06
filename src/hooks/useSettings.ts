@@ -22,13 +22,16 @@ export const useSettings = () => {
    * @param tab the settings tab name
    * @returns change state informations
    */
-  const changeSettingsMenu = (tab: SettingsTabs): void => setState({ ...state, tab: tab });
-  /**
-   * function for update settings informations
-   * @param channelId 
-   * @returns change state informations
-   */
-  const updateSettings = async (channelId: string): Promise<void> => setState({ ...state, channelIdentity: await getChatIdentity(channelId, localStorage.getItem("channelId")!) });
+  const changeSettingsMenu = (tab: SettingsTabs, channelId: string): void => {
+    setState(s => ({
+      ...s,
+      tab: tab
+    }));
+
+    if(tab === "channel") {
+      loadChannelSettings(channelId);
+    };
+  };
   /**
    * function for update rules options in settings and localStorage
    * @param event 
@@ -58,12 +61,24 @@ export const useSettings = () => {
     // change data in localstorage
     localStorage.setItem("settings", JSON.stringify(newSettings));
   };
+  /**
+   * function for get channel settings
+   * @param channelId the channel id do u want get user settings
+   * @returns show channel settings in settings UI
+   */
+  const loadChannelSettings = async (channelId: string): Promise<void> => {
+    let channelIdentity = await getChatIdentity(channelId, localStorage.getItem("channelId")!);
+    setState(s => ({
+      ...s,
+      channelIdentity: channelIdentity.data.identity,
+    }));
+  };
   // export function/variables
   return {
-    logOut,
     ...state,
+    logOut,
     changeSettingsMenu,
-    updateSettings,
-    rulesUpdate
+    rulesUpdate,
+    loadChannelSettings,
   };
 };

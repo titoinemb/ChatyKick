@@ -2,7 +2,9 @@
 A simple desktop application for Kick chat with cool features
 
 # how to get Bearer token ?
-copy past this code in your console javascript in kick.com
+### 1. use this extension :
+[Extension](https://github.com/titoinemb/GetKickBearerToken-extension/releases)
+### 2. copy past this code in your console javascript in kick.com
 ```js
 console.log(decodeURIComponent(document.cookie.split('; ').find(r=>r.startsWith('session_token=')).split('=')[1]))
 ```

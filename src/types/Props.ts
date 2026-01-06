@@ -15,7 +15,7 @@ export type MessageProps = {
   replyMode?: (item: Message) => void;
 };
 export type UserProps = {
-  badges: Badge[];
+  item: any;
   followingSince: string;
   profilePic: string;
   username: string;
@@ -52,10 +52,14 @@ export type EmotesListProps = {
 export type SettingsProps = {
   channelName: string | null;
   channelMaxMessage: number;
+  channelId: string;
   handleChangeMaxMessage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export type RuleProps = {
   rules: string;
   channelName: string;
   blackListChannelRules: (channelName: string) => void;
+};
+export type BadgesProps = {
+  item: any;
 };

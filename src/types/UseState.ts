@@ -1,4 +1,4 @@
-import { Badge, ChatSettings, Message, SettingsTabs } from "@types";
+import { ChatSettings, Message, SettingsTabs } from "@types";
 
 export type ChatState = {
   chatList: ChatSettings[];
@@ -25,7 +25,6 @@ export type SettingsState = {
   channelIdentity: any | null;
 };
 export type UserStates = {
-  badges: Badge[] | null;
   username: string | null;
   profilePic: string | null;
   followingSince: string | null;

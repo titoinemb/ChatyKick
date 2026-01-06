@@ -7,3 +7,4 @@ export { kicksBalance } from "./kick/kicksBalance";
 export { getChatIdentity } from "./kick/chat/identity/getChatIdentity";
 export { authSocket } from "./kick/chat/authSocket";
 export { rules } from "./kick/chat/rules";
+export { getUserInfos } from "./kick/chat/getUserInfos";
