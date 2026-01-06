@@ -21,6 +21,8 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
     metadata = JSON.parse(item.metadata);
   };
 
+  console.log(metadata)
+
   return (
     <>
       {visible && (
@@ -38,10 +40,10 @@ export const Message: React.FC<MessageProps> = ({ item, handleMouseEnter, handle
           }
         }}
       >
-        {metadata && !metadata.message_ref && (
+        {metadata && metadata.original_sender && (
           <div className="replyMetadata">
-            Replying to {metadata.original_sender.username}:
-            <span className="content" dangerouslySetInnerHTML={{ __html: replaceEmotesAndLinks(metadata.original_message.content) }} />
+            Replying to {metadata.original_sender.username!}:
+            <span className="content" dangerouslySetInnerHTML={{ __html: replaceEmotesAndLinks(metadata.original_message.content!) }} />
           </div>
         )}
         
