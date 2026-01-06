@@ -52,7 +52,12 @@ export const ChatWithData: React.FC = () => {
       <div className="content">
         <div className="chat" ref={containerRef} onScroll={handleScroll}>
           {channelMessages.slice().reverse().map((item) => (
-            <Message key={item.id} item={item} {...{ handleMouseEnter, handleMouseLeave, replyMode }} channelName={channelName!} />
+            <Message
+              key={item.id}
+              item={item}
+              {...{ handleMouseEnter, handleMouseLeave, replyMode }}
+              channelName={channelName!}
+            />
           ))}
           <div ref={bottomRef} />
           <div style={{ padding: "35px" }}></div>
@@ -88,24 +93,27 @@ export const ChatWithData: React.FC = () => {
               blackListChannelRules={blackListChannelRules}
             />
           )}
-          <div className="box">
-            <input type="text" ref={inputRef} placeholder="Type a message…" value={message}
-              onChange={(event) => {
-                handleChangeInput(event.target.value);
-              }}
-              onKeyDown={(event) => {
-                inputMessageEnter(event, replyMessageData, removeReply);
-              }}
-            />
-            <div style={{ margin: "4px" }}></div>
-            <div className="button" onClick={showEmotesList}>
-              <Emoji />
+          {/** if rules is displayed is impossible to send a message*/}
+          {!rulesInfos && (
+            <div className="box">
+              <input type="text" ref={inputRef} placeholder="Type a message…" value={message}
+                onChange={(event) => {
+                  handleChangeInput(event.target.value);
+                }}
+                onKeyDown={(event) => {
+                  inputMessageEnter(event, replyMessageData, removeReply);
+                }}
+              />
+              <div style={{ margin: "4px" }}></div>
+              <div className="button" onClick={showEmotesList}>
+                <Emoji />
+              </div>
+              <div style={{ margin: "2.5px" }}></div>
+              <div className="button" onClick={showSettingsList}>
+                <Settings />
+              </div>
             </div>
-            <div style={{ margin: "2.5px" }}></div>
-            <div className="button" onClick={showSettingsList}>
-              <Settings />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
