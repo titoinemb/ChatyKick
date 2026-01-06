@@ -3,7 +3,7 @@ import { SubGiftProps } from "@types";
 
 export const SubGifter: React.FC<SubGiftProps> = ({ dark, light }) => (
     <svg viewBox="0 0 16 16" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_301_17810)">
+      <g>
         <path d="M7.99999 9.14999V6.62499L0.484985 3.35999V6.34499L1.15499 6.63499V12.73L7.99999 15.995V9.14999Z" fill={dark} />
         <path d="M8.00003 10.735V9.61501L1.15503 6.63501V7.70501L8.00003 10.735Z" fill={dark} />
         <path d="M15.515 3.355V6.345L14.85 6.64V12.73L12.705 13.755L11.185 14.48L8.00499 15.995V6.715L4.81999 5.295H4.81499L3.29499 4.61L0.484985 3.355L3.66999 1.935L3.67999 1.93L5.09499 1.3L8.00499 0L10.905 1.3L12.32 1.925L12.33 1.935L15.515 3.355Z" fill={light} />
