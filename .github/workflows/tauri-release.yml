@@ -73,13 +73,13 @@ jobs:
         if: runner.os != 'Linux'
         run: |
           mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 --decode > ~/.tauri/myapp.key
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | base64 --decode > ~/.tauri/myapp.key
 
       # 8️⃣ Publish release with signed binaries
       - uses: tauri-apps/tauri-action@v0
         env:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
         with:
           tagName: ${{ github.event.release.tag_name }}
           releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
