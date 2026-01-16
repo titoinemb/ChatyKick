@@ -14,22 +14,18 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout code
       - uses: actions/checkout@v4
 
-      # Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Setup Rust
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
 
-      # Linux dependencies for GTK
       - if: runner.os == 'Linux'
         run: |
           sudo apt-get update
@@ -48,22 +44,20 @@ jobs:
             libxi-dev \
             libxinerama-dev \
             libxcursor-dev \
-            libssl-dev
+            libssl-dev \
+            libjavascriptcoregtk-4.1-dev
+          export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 
-      # Install dependencies
       - run: npm ci
 
-      # Build Tauri app
       - run: npm run tauri -- build --verbose
 
-      # Restore Tauri signing key on Windows/macOS
       - name: Restore Tauri Signing Key
         if: runner.os != 'Linux'
         run: |
           mkdir -p ~/.tauri
           echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 --decode > ~/.tauri/myapp.key
 
-      # Create release with signed binaries
       - uses: tauri-apps/tauri-action@v0
         env:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
