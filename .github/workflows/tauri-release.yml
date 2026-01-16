@@ -26,6 +26,11 @@ jobs:
           profile: minimal
           override: true
 
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libglib2.0-dev build-essential
+
       - run: npm ci
 
       - run: npm run tauri -- build --verbose
