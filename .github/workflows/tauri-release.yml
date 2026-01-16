@@ -45,7 +45,8 @@ jobs:
             libxinerama-dev \
             libxcursor-dev \
             libssl-dev \
-            libjavascriptcoregtk-4.1-dev
+            libjavascriptcoregtk-4.1-dev \
+            libsoup-3.0-dev
           export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 
       - run: npm ci
