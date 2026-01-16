@@ -15,7 +15,7 @@ export type MessageProps = {
   replyMode?: (item: Message) => void;
 };
 export type UserProps = {
-  item: any;
+  badges: any;
   followingSince: string;
   profilePic: string;
   username: string;
@@ -61,5 +61,5 @@ export type RuleProps = {
   blackListChannelRules: (channelName: string) => void;
 };
 export type BadgesProps = {
-  item: any;
+  badges: Badge[];
 };

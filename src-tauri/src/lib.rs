@@ -1,24 +1,27 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+use tauri_plugin_updater::UpdaterExt;
+
 mod services {
-    pub mod kicks_balance;
-    pub mod get_channel_informations;
     pub mod bearer_checker;
+    pub mod get_channel_informations;
+    pub mod kicks_balance;
     pub mod chat {
         pub mod identity {
             pub mod get_chat_identity;
         }
-        pub mod chat_history;
-        pub mod send_message;
-        pub mod get_emotes;
         pub mod auth_socket;
-        pub mod rules;
+        pub mod chat_history;
+        pub mod get_emotes;
         pub mod get_user_infos;
+        pub mod rules;
+        pub mod send_message;
     }
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
@@ -33,6 +36,16 @@ pub fn run() {
             services::chat::rules::rules,
             services::chat::get_user_infos::get_user_infos,
         ])
+        .setup(|app: &mut tauri::App| {
+            let handle: tauri::AppHandle = app.handle().clone();
+            tauri::async_runtime::spawn(async move {
+                if let Ok(Some(update)) = handle.updater().unwrap().check().await {
+                    update.download_and_install(|_, _| {}, || {}).await.unwrap();
+                    handle.restart();
+                }
+            });
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

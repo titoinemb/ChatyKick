@@ -2,10 +2,10 @@ import React from "react";
 import { BadgesProps, SubGiftBadgesColor, BadgeTypes, Badge } from "@types";
 import { BadgeMap } from "@components";
 
-export const Badges: React.FC<BadgesProps> = ({ item }) => {
+export const Badges: React.FC<BadgesProps> = ({ badges }) => {
   return (
     <>
-      {item.sender.identity.badges.map((badge: Badge, i: number) => {
+      {badges.map((badge: Badge, i: number) => {
         if (!(badge.text in BadgeMap)) return null;
 
         const BadgeComponent = BadgeMap[badge.text as keyof typeof BadgeMap];

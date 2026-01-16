@@ -95,7 +95,35 @@
               }
             }
           }
+        }
 
+        .celebration {
+          display: flex;
+
+          .color {
+            background-color: red;
+            width: 2.5px;
+          }
+
+          .content {
+            margin: 10px;
+            display: flex;
+
+            .right {
+              margin: 10px;
+
+              .top {
+                .description {
+                  color: grey;
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+
+        .msg,
+        .celebration {
           .identity {
             display: flex;
             align-items: center;

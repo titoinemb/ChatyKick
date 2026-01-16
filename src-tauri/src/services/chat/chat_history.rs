@@ -1,7 +1,6 @@
-
 use serde_json::{Number, Value};
-use tauri::command;
 use surf;
+use tauri::command;
 
 #[command]
 pub async fn chat_history(channel_id: Number) -> Result<Value, String> {
@@ -35,9 +34,6 @@ pub async fn chat_history(channel_id: Number) -> Result<Value, String> {
             }
         }
     } else {
-        Err(format!(
-            "Erreur: Statut HTTP {}",
-            response.status()
-        ))
+        Err(format!("Erreur: Statut HTTP {}", response.status()))
     }
 }

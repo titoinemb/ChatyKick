@@ -1,7 +1,6 @@
-
+use serde_json::Value;
 use surf;
 use tauri::command;
-use serde_json::Value;
 
 #[command]
 pub async fn kicks_balance(bearer_token: String) -> Result<Value, String> {

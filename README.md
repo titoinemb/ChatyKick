@@ -13,6 +13,8 @@ console.log(decodeURIComponent(document.cookie.split('; ').find(r=>r.startsWith(
 <p align="left">
   <img src="./.github/MD/imgs/screen1.png" width="200px" />
   <img src="./.github/MD/imgs/screen2.png" width="200px" />
+  <img src="./.github/MD/imgs/screen3.png" width="200px" />
+  <img src="./.github/MD/imgs/screen4.png" width="200px" />
 </p>
 
 # utils links

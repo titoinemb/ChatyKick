@@ -12,7 +12,7 @@ export type Badge = {
   // name of badge
   text: string;
   // count is for sub badge
-  count: number | never;
+  count?: number;
 };
 export type Message = {
   id: string;
@@ -20,7 +20,7 @@ export type Message = {
   user_id: number;
   content: string;
   // metadata json in string
-  metadata: string;
+  metadata: string | any;
   sender: {
     id: number;
     // slug is the pseudo for request url

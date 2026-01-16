@@ -4,5 +4,7 @@ import { Info } from "@components";
 import "@styles/layouts/notif.scss";
 
 export const Notif: React.FC<NotifProps> = ({ message }) => (
-  <div className='notif'><Info />{message}</div>
+  <div className='notif'>
+    <Info />{message}
+  </div>
 );

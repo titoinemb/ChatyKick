@@ -1,10 +1,13 @@
-
+use serde_json::{json, Value};
 use surf;
 use tauri::command;
-use serde_json::{Value,json};
 
 #[command]
-pub async fn auth_socket(bearer_token: String, channel_name: String, socket_id: String) -> Result<Value, String> {
+pub async fn auth_socket(
+    bearer_token: String,
+    channel_name: String,
+    socket_id: String,
+) -> Result<Value, String> {
     let url: String = format!("https://kick.com/broadcasting/auth");
     // make body request
     let payload: Value = json!({
@@ -16,7 +19,10 @@ pub async fn auth_socket(bearer_token: String, channel_name: String, socket_id: 
 
     let mut response: surf::Response = client
         .post(url)
-        .body(surf::Body::from_json(&payload).map_err(|_| "Erreur lors de la conversion JSON".to_string())?)
+        .body(
+            surf::Body::from_json(&payload)
+                .map_err(|_| "Erreur lors de la conversion JSON".to_string())?,
+        )
         .header("Authorization", format!("Bearer {}", bearer_token))
         .header("Content-Type", "application/json")
         .header(

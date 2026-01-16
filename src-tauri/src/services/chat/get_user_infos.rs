@@ -1,11 +1,13 @@
-
-use serde_json::{Value};
-use tauri::command;
+use serde_json::Value;
 use surf;
+use tauri::command;
 
 #[command]
 pub async fn get_user_infos(channel_name: String, username: String) -> Result<Value, String> {
-    let url: String = format!("https://kick.com/api/v2/channels/{}/users/{}", channel_name, username);
+    let url: String = format!(
+        "https://kick.com/api/v2/channels/{}/users/{}",
+        channel_name, username
+    );
 
     let client: surf::Client = surf::Client::new();
 
@@ -35,9 +37,6 @@ pub async fn get_user_infos(channel_name: String, username: String) -> Result<Va
             }
         }
     } else {
-        Err(format!(
-            "Erreur: Statut HTTP {}",
-            response.status()
-        ))
+        Err(format!("Erreur: Statut HTTP {}", response.status()))
     }
 }

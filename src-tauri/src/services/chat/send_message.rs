@@ -1,10 +1,15 @@
-
+use serde_json::{json, Value};
 use surf;
 use tauri::command;
-use serde_json::{Value,json};
 
 #[command]
-pub async fn send_message(bearer_token: String, channel_id: String, message_type: String, metadata: Option<Value>, content: String) -> Result<Value, String> {
+pub async fn send_message(
+    bearer_token: String,
+    channel_id: String,
+    message_type: String,
+    metadata: Option<Value>,
+    content: String,
+) -> Result<Value, String> {
     let url: String = format!("https://kick.com/api/v2/messages/send/{}", channel_id);
     // make body for request
     let mut payload: Value = json!({
@@ -20,7 +25,10 @@ pub async fn send_message(bearer_token: String, channel_id: String, message_type
 
     let mut response: surf::Response = client
         .post(url)
-        .body(surf::Body::from_json(&payload).map_err(|_| "Erreur lors de la conversion JSON".to_string())?)
+        .body(
+            surf::Body::from_json(&payload)
+                .map_err(|_| "Erreur lors de la conversion JSON".to_string())?,
+        )
         .header("Authorization", format!("Bearer {}", bearer_token))
         .header("Content-Type", "application/json")
         .header(

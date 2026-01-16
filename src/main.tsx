@@ -5,9 +5,7 @@ import { Chat, Login } from "@components";
 import "@styles/all.scss";
 
 // block context menu for all elements
-document.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-});
+document.addEventListener("contextmenu", (e) => e.preventDefault());
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

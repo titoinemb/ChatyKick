@@ -11,6 +11,7 @@ export const Settings = lazy(() => import("./svg/Settings").then(mod => ({ defau
 export const World = lazy(() => import("./svg/World").then(mod => ({ default: mod.World })));
 export const Trash = lazy(() => import("./svg/Trash").then(mod => ({ default: mod.Trash })));
 export const Reply = lazy(() => import("./svg/Reply").then(mod => ({ default: mod.Reply })));
+export const Party = lazy(() => import("./svg/Party").then(mod => ({ default: mod.Party })));
 // layouts
 export const ChatWithOutData = lazy(() => import("./layouts/chat/WithOutData").then(mod => ({ default: mod.ChatWithOutData })));
 export const ChatWithData = lazy(() => import("./layouts/chat/WithData").then(mod => ({ default: mod.ChatWithData })));

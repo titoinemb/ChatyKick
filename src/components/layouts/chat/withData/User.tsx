@@ -2,7 +2,7 @@ import React from "react";
 import { UserProps } from "@types";
 import { Add, Badges } from "@components";
 
-export const User: React.FC<UserProps> = ({ item, followingSince, profilePic, username, removeUserPopup }) => (
+export const User: React.FC<UserProps> = ({ badges, followingSince, profilePic, username, removeUserPopup }) => (
   <div className="user">
     <div className="top">
       <div className="left">
@@ -18,7 +18,7 @@ export const User: React.FC<UserProps> = ({ item, followingSince, profilePic, us
       <div className="badges">
         <div className="title">Badges:</div>
         <div className="badgeslist">
-          <Badges item={item} />
+          <Badges badges={badges} />
         </div>
       </div>
     </div>

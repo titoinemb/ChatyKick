@@ -1,7 +1,6 @@
-
-use serde_json::{Value};
-use tauri::command;
+use serde_json::Value;
 use surf;
+use tauri::command;
 
 #[command]
 pub async fn get_emotes(name: String, bearer_token: String) -> Result<Value, String> {
@@ -36,9 +35,6 @@ pub async fn get_emotes(name: String, bearer_token: String) -> Result<Value, Str
             }
         }
     } else {
-        Err(format!(
-            "Erreur: Statut HTTP {}",
-            response.status()
-        ))
+        Err(format!("Erreur: Statut HTTP {}", response.status()))
     }
 }
