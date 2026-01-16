@@ -74,7 +74,7 @@ jobs:
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
       # 7️⃣ Build Tauri app
-      - run: npm run tauri -- build --verbose
+      - run: npm run tauri build -- --verbose -w ~/.tauri/myapp.key
 
       # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
       - name: Restore Tauri Signing Key
