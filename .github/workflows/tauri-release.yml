@@ -1,9 +1,6 @@
 name: Tauri Release
 
 on:
-  push:
-    tags:
-      - "v*"
   release:
     types: [created]
 
@@ -31,14 +28,14 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run tauri -- --verbose
+      - run: npm run tauri -- build --verbose
 
       - uses: tauri-apps/tauri-action@v0
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: ${{ github.ref_name || github.event.release.tag_name }}
-          releaseName: "ChatyKick ${{ github.ref_name || github.event.release.tag_name }}"
+          tagName: ${{ github.event.release.tag_name }}
+          releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
           releaseBody: "Auto release"
           args: "--verbose"
