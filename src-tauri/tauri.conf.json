@@ -38,7 +38,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJEOTc2NzE5QjAxNUJBQjYKUldTMnVoV3dHV2VYTFV3T0J0VkZyR3pzaDdtVjNyeEZhbDU2MHR1OWlEMGZlVTVjNDJtd3FnMlkK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IERDMTJEOTIwMzFEN0Y3NzcKUldSMzk5Y3hJTmtTM0puVnNmNFZTeUlkV3Vzb0d1WU9uMEo1aFRiQjBla0JtczlBSVgwajE4V0kK",
       "endpoints": [
         "https://github.com/titoinemb/ChatyKick/releases/latest/download/latest.json"
       ],

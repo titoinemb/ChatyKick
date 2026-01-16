@@ -65,23 +65,31 @@ jobs:
       # 5️⃣ Install Node dependencies
       - run: npm ci
 
-      # 6️⃣ Build Tauri app
+      # 6️⃣ Set environment variables for Tauri signing key (Make sure it's done before the build)
+      - name: Set environment variables for signing key
+        run: |
+          mkdir -p ~/.tauri
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
+          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
+
+      # 7️⃣ Build Tauri app
       - run: npm run tauri -- build --verbose
 
-      # 7️⃣ Restore Tauri signing key for Windows/macOS
+      # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
       - name: Restore Tauri Signing Key
         if: runner.os != 'Linux'
         run: |
           mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}"
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
 
-      # 8️⃣ Publish release with signed binaries
+      # 9️⃣ Publish release with signed binaries
       - uses: tauri-apps/tauri-action@v0
-        env:
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
         with:
           tagName: ${{ github.event.release.tag_name }}
           releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
           releaseBody: "Auto release"
           args: "--verbose -w ~/.tauri/myapp.key"
+        env:
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
