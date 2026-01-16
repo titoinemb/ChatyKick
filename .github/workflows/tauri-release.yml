@@ -73,7 +73,7 @@ jobs:
           echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      # 7️⃣ Build Tauri app
+      # 7️⃣ Build Tauri app (No need to include the signing key here)
       - run: npm run tauri build -- --verbose
 
       # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
@@ -89,7 +89,6 @@ jobs:
           tagName: ${{ github.event.release.tag_name }}
           releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
           releaseBody: "Auto release"
-          args: "--verbose -w ~/.tauri/myapp.key"
         env:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
