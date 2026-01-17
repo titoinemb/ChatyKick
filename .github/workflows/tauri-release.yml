@@ -14,22 +14,22 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout the repository
       - uses: actions/checkout@v4
 
-      # 2️⃣ Node.js
+      # 2️⃣ Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️⃣ Rust
+      # 3️⃣ Setup Rust
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
 
-      # 4️⃣ Linux system deps
+      # 4️⃣ Linux dependencies for GTK/WebKitGTK/AppImage
       - if: runner.os == 'Linux'
         run: |
           sudo apt-get update
@@ -60,31 +60,47 @@ jobs:
             glib-networking \
             gdk-pixbuf-2.0 \
             desktop-file-utils
+          export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 
-      # 5️⃣ Install deps
+      # 5️⃣ Install Node dependencies
       - run: npm ci
 
-      # 6️⃣ Write Tauri private key (ONCE, ALL OS)
-      - name: Write Tauri signing key
+      # 6️⃣ Set environment variables for Tauri signing key (Make sure it's done before the build)
+      - name: Set environment variables for signing key
         run: |
-          mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/chatykick.key
+          # Pour Linux/macOS
+          if [[ "$RUNNER_OS" != "Windows" ]]; then
+            mkdir -p ~/.tauri
+            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
+          fi
 
-      # 7️⃣ Export env vars (PATH, NOT CONTENT)
-      - name: Export Tauri signing env
-        run: |
-          echo "TAURI_SIGNING_PRIVATE_KEY=$HOME/.tauri/chatykick.key" >> $GITHUB_ENV
+          # Pour Windows
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            mkdir -p C:\tauri
+            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | base64 --decode > C:\tauri\myapp.pfx
+            echo "TAURI_SIGNING_PRIVATE_KEY=C:\\tauri\\myapp.pfx" >> $GITHUB_ENV
+          fi
+
+          # Définir la variable d'environnement pour le mot de passe (fonctionne sur tous les OS)
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      # 8️⃣ Build app + updater artifacts
+      # 7️⃣ Build Tauri app (No need to include the signing key here)
       - run: npm run tauri build -- --verbose
 
-      # 9️⃣ Publish GitHub release assets
+      # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
+      - name: Restore Tauri Signing Key
+        if: runner.os != 'Linux'
+        run: |
+          mkdir -p ~/.tauri
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
+
+      # 9️⃣ Publish release with signed binaries
       - uses: tauri-apps/tauri-action@v0
         with:
           tagName: ${{ github.event.release.tag_name }}
           releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
           releaseBody: "Auto release"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Remplacer GITHUB_TOKEN par GH_TOKEN ici
