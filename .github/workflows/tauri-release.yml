@@ -69,10 +69,8 @@ jobs:
       - name: Set environment variables for signing key (Windows)
         if: runner.os == 'Windows'
         run: |
-          mkdir -p C:\tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > C:\tauri\myapp.pfx
-          echo "TAURI_SIGNING_PRIVATE_KEY=C:\\tauri\\myapp.pfx" >> $GITHUB_ENV
-          echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
+          $env:TAURI_SIGNING_PRIVATE_KEY="${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}"
+          $env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD="${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}"
 
       # 7️⃣ Set environment variables for Tauri signing key (for Linux/macOS)
       - name: Set environment variables for signing key (Linux/macOS)
