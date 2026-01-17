@@ -14,22 +14,22 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout
       - uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
+      # 2️⃣ Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️⃣ Setup Rust
+      # 3️⃣ Rust
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
 
-      # 4️⃣ Linux dependencies for GTK/WebKitGTK/AppImage
+      # 4️⃣ Linux system deps
       - if: runner.os == 'Linux'
         run: |
           sudo apt-get update
@@ -60,38 +60,31 @@ jobs:
             glib-networking \
             gdk-pixbuf-2.0 \
             desktop-file-utils
-          export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 
-      # 5️⃣ Install Node dependencies
+      # 5️⃣ Install deps
       - run: npm ci
 
-      # 6️⃣ Set environment variables for Tauri signing key (Make sure it's done before the build)
-      - name: Set environment variables for signing key
+      # 6️⃣ Write Tauri private key (ONCE, ALL OS)
+      - name: Write Tauri signing key
         run: |
           mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
-          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/chatykick.key
+
+      # 7️⃣ Export env vars (PATH, NOT CONTENT)
+      - name: Export Tauri signing env
+        run: |
+          echo "TAURI_SIGNING_PRIVATE_KEY=$HOME/.tauri/chatykick.key" >> $GITHUB_ENV
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      # 7️⃣ Build Tauri app (No need to include the signing key here)
+      # 8️⃣ Build app + updater artifacts
       - run: npm run tauri build -- --verbose
 
-      # 8️⃣ Restore Tauri Signing Key for Windows
-      - name: Restore Tauri Signing Key for Windows
-        if: runner.os == 'Windows'
-        run: |
-          mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | Out-File -Encoding ascii -FilePath ~/.tauri/myapp.key
-          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
-          echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
-
-      # 9️⃣ Publish release with signed binaries
+      # 9️⃣ Publish GitHub release assets
       - uses: tauri-apps/tauri-action@v0
         with:
           tagName: ${{ github.event.release.tag_name }}
           releaseName: "ChatyKick ${{ github.event.release.tag_name }}"
           releaseBody: "Auto release"
         env:
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
