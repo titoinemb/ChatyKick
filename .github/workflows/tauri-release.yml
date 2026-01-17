@@ -68,33 +68,18 @@ jobs:
       # 6️⃣ Set environment variables for Tauri signing key (for Windows)
       - name: Set environment variables for signing key (Windows)
         if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          # Définir le chemin de stockage du fichier .pfx dans un répertoire temporaire
-          $pfxPath = "C:\Windows\Temp\myapp.pfx"
-          
-          # Créer le répertoire s'il n'existe pas déjà (ce n'est généralement pas nécessaire sous C:\Windows\Temp)
-          if (-not (Test-Path -Path "C:\Windows\Temp")) {
-            New-Item -Path "C:\Windows\Temp" -ItemType Directory
-          }
-
-          # Décoder la clé base64 et l'écrire dans un fichier .pfx
-          $keyBase64 = "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}"
-          try {
-            [System.IO.File]::WriteAllBytes($pfxPath, [Convert]::FromBase64String($keyBase64))
-            Write-Host "La clé a été décodée et écrite avec succès dans $pfxPath"
-          } catch {
-            Write-Host "Erreur lors de l'écriture du fichier .pfx : $_"
-            exit 1
-          }
-
-          # Définir les variables d'environnement pour Tauri (en passant le chemin du fichier .pfx)
-          echo "TAURI_SIGNING_PRIVATE_KEY=$pfxPath" >> $GITHUB_ENV
+          # Définit directement la clé privée dans l'environnement
+          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
-          # Vérification des variables d'environnement pour s'assurer qu'elles sont correctement définies
-          Write-Host "Variables d'environnement définies pour la clé de signature."
-          Write-Host "TAURI_SIGNING_PRIVATE_KEY is set"
-          Write-Host "TAURI_SIGNING_PRIVATE_KEY_PASSWORD is set"
+      - name: Verify environment variables (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Write-Host "TAURI_SIGNING_PRIVATE_KEY is set: $env:TAURI_SIGNING_PRIVATE_KEY"
+          Write-Host "TAURI_SIGNING_PRIVATE_KEY_PASSWORD is set: $env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD"
 
       - name: Verify environment variables for signing key (Windows)
         if: runner.os == 'Windows'
