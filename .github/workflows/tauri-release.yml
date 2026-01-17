@@ -76,12 +76,14 @@ jobs:
       # 7️⃣ Build Tauri app (No need to include the signing key here)
       - run: npm run tauri build -- --verbose
 
-      # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
-      - name: Restore Tauri Signing Key
-        if: runner.os != 'Linux'
+      # 8️⃣ Restore Tauri Signing Key for Windows
+      - name: Restore Tauri Signing Key for Windows
+        if: runner.os == 'Windows'
         run: |
           mkdir -p ~/.tauri
-          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | Out-File -Encoding ascii -FilePath ~/.tauri/myapp.key
+          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
       # 9️⃣ Publish release with signed binaries
       - uses: tauri-apps/tauri-action@v0
