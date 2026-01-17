@@ -84,9 +84,20 @@ jobs:
           echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
           cat ~/.tauri/myapp.key  # Just for diagnostic purposes
 
-      # 9️⃣ Publish release with signed binaries
+      # 9️⃣ Verify if the signing key exists
+      - name: Check if Signing Key is Available
+        id: check_signing_key
+        run: |
+          if [ -z "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" ]; then
+            echo "No signing key found, skipping signing process."
+            echo "SKIP_SIGNING=true" >> $GITHUB_ENV
+          else
+            echo "Signing key found."
+            echo "SKIP_SIGNING=false" >> $GITHUB_ENV
+
+      # 🔟 Publish release with signed binaries only if signing key is available
       - name: Publish Release with Signed Binaries
-        if: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY != '' }}
+        if: ${{ env.SKIP_SIGNING == 'false' }}
         uses: tauri-apps/tauri-action@v0
         with:
           tagName: ${{ github.event.release.tag_name }}
