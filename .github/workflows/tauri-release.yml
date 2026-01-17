@@ -74,10 +74,10 @@ jobs:
             echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
           fi
 
-          # Pour Windows
+          # Pour Windows (la clé est déjà au bon format, donc on la copie)
           if [[ "$RUNNER_OS" == "Windows" ]]; then
             mkdir -p C:\tauri
-            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | base64 --decode > C:\tauri\myapp.pfx
+            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > C:\tauri\myapp.pfx
             echo "TAURI_SIGNING_PRIVATE_KEY=C:\\tauri\\myapp.pfx" >> $GITHUB_ENV
           fi
 
@@ -103,4 +103,4 @@ jobs:
         env:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Remplacer GITHUB_TOKEN par GH_TOKEN ici
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
