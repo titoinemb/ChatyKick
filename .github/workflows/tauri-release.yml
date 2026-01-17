@@ -65,36 +65,35 @@ jobs:
       # 5️⃣ Install Node dependencies
       - run: npm ci
 
-      # 6️⃣ Set environment variables for Tauri signing key (Make sure it's done before the build)
-      - name: Set environment variables for signing key
+      # 6️⃣ Set environment variables for Tauri signing key (for Windows)
+      - name: Set environment variables for signing key (Windows)
+        if: runner.os == 'Windows'
         run: |
-          # Pour Linux/macOS
-          if [[ "$RUNNER_OS" != "Windows" ]]; then
-            mkdir -p ~/.tauri
-            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
-          fi
-
-          # Pour Windows (la clé est déjà au bon format, donc on la copie)
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            mkdir -p C:\tauri
-            echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > C:\tauri\myapp.pfx
-            echo "TAURI_SIGNING_PRIVATE_KEY=C:\\tauri\\myapp.pfx" >> $GITHUB_ENV
-          fi
-
-          # Définir la variable d'environnement pour le mot de passe (fonctionne sur tous les OS)
+          mkdir -p C:\tauri
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > C:\tauri\myapp.pfx
+          echo "TAURI_SIGNING_PRIVATE_KEY=C:\\tauri\\myapp.pfx" >> $GITHUB_ENV
           echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      # 7️⃣ Build Tauri app (No need to include the signing key here)
+      # 7️⃣ Set environment variables for Tauri signing key (for Linux/macOS)
+      - name: Set environment variables for signing key (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p ~/.tauri
+          echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
+          echo "TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_PRIVATE_KEY_PASSWORD }}" >> $GITHUB_ENV
+
+      # 8️⃣ Build Tauri app (No need to include the signing key here)
       - run: npm run tauri build -- --verbose
 
-      # 8️⃣ Restore Tauri Signing Key for Windows/macOS (Make sure to handle this part correctly)
-      - name: Restore Tauri Signing Key
+      # 9️⃣ Restore Tauri Signing Key for Windows/macOS
+      - name: Restore Tauri Signing Key (Windows/macOS)
         if: runner.os != 'Linux'
         run: |
           mkdir -p ~/.tauri
           echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" > ~/.tauri/myapp.key
 
-      # 9️⃣ Publish release with signed binaries
+      # 🔟 Publish release with signed binaries
       - uses: tauri-apps/tauri-action@v0
         with:
           tagName: ${{ github.event.release.tag_name }}
