@@ -1,6 +1,7 @@
 import React from 'react';
 import { SettingsProps } from "@types";
 import { useSettings } from "@hooks";
+import tauriConfig from "../../../../../src-tauri/tauri.conf.json";
 
 export const Settings: React.FC<SettingsProps> = ({ channelId, /*channelName, not used, soon*/ channelMaxMessage, handleChangeMaxMessage }) => {
   let {
@@ -50,6 +51,7 @@ export const Settings: React.FC<SettingsProps> = ({ channelId, /*channelName, no
           ) soon*/}
         </div>
       </div>
+      <div className="version">v{tauriConfig.version}</div>
     </div>
   );
 };
